@@ -15,10 +15,6 @@ const productRoutes: Routes = [
         resolve: {
           productItemResolver: ProductItemResolverService
         }
-      },
-      {
-        path: '',
-        component: ProductListComponent
       }
     ]
   }
