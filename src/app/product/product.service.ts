@@ -1,30 +1,25 @@
 import { Injectable } from '@angular/core';
-import {Product, ProductTile} from "./product.models";
+import { Product } from "./product.models";
+import {BehaviorSubject, map} from "rxjs";
+import { MOCK_PRODUCTS } from "./mock-products";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  dummyProducts: Product[];
-  productsCache: Map<number, Product>
+  private products$: BehaviorSubject<Product[]> = new BehaviorSubject<Product[]>(MOCK_PRODUCTS);
 
-  constructor() {
-    this.dummyProducts = [
-      { id: 1, name: 'Toy 1', description: 'Toy 1 description' },
-      { id: 2, name: 'Toy 2', description: 'Toy 2 description' }
-    ];
-
-    this.productsCache = new Map<number, Product>();
-    this.dummyProducts.forEach(product => this.productsCache.set(product.id, product));
-  }
+  constructor() {}
 
   getProducts() {
-    return this.dummyProducts; //TODO this should call the backend
+    return this.products$; //TODO this should call the backend
   }
 
-  getProduct(productId: number) {
-    return this.productsCache.get(productId); //TODO this should call the backend
+  getProduct(productId: number | string) {
+    return this.getProducts().pipe(
+      map(products => products.find(product => product.id === productId)!)
+    ); //TODO this should call the backend
   }
 
   // getProducts() : ProductTile[] {

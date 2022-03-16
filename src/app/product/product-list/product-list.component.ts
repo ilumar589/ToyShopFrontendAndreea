@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Product, ProductTile} from "../product.models";
 import { ProductService } from "../product.service";
+import {map, Observable} from "rxjs";
 
 
 @Component({
@@ -10,12 +11,14 @@ import { ProductService } from "../product.service";
 })
 export class ProductListComponent implements OnInit {
 
-  products: Product[];
-  productTiles: ProductTile[];
+  products$: Observable<Product[]>;
+  productTiles$: Observable<ProductTile[]>;
 
   constructor(private productService: ProductService) {
-    this.products = productService.getProducts();
-    this.productTiles = this.products.map(product => new ProductTile('lightblue', 1, 1, product));
+    this.products$ = productService.getProducts();
+    this.productTiles$ = this.products$.pipe(
+      map(products => products.map(product => new ProductTile('lightblue', 1, 1, product))
+    ));
   }
 
   ngOnInit(): void {

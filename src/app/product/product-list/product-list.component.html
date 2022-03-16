@@ -1,6 +1,6 @@
 <mat-grid-list cols="4" rowHeight="100px">
   <mat-grid-tile
-    *ngFor="let tile of productTiles"
+    *ngFor="let tile of productTiles$ | async"
     [colspan]="tile.cols"
     [rowspan]="tile.rows"
     [style.background]="tile.color"
