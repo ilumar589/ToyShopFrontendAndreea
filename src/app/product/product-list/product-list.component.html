@@ -3,7 +3,8 @@
     *ngFor="let tile of productTiles"
     [colspan]="tile.cols"
     [rowspan]="tile.rows"
-    [style.background]="tile.color">
-    {{tile.text}}
+    [style.background]="tile.color"
+    [routerLink]="[tile.product.id]">
+    {{tile.product.name}} - {{tile.product.description}}
   </mat-grid-tile>
 </mat-grid-list>

@@ -10,17 +10,18 @@ import { ProductService } from "../product.service";
 })
 export class ProductListComponent implements OnInit {
 
-  productTiles: ProductTile[]
+  products: Product[];
+  productTiles: ProductTile[];
 
-  constructor(productService: ProductService) {
-    this.productTiles = productService.getProducts();
+  constructor(private productService: ProductService) {
+    this.products = productService.getProducts();
+    this.productTiles = this.products.map(product => new ProductTile('lightblue', 1, 1, product));
   }
 
   ngOnInit(): void {
   }
 
   goToProduct(product: Product) {
-    this.router
   }
 
 }
